@@ -18,8 +18,11 @@ jobs:
 
       - name: Package Plugin Archive
         run: |
+          mkdir -p /tmp/pkg/clock_widget
+          cp -r . /tmp/pkg/clock_widget/
+          rm -rf /tmp/pkg/clock_widget/.git /tmp/pkg/clock_widget/.github /tmp/pkg/clock_widget/dist
           mkdir -p dist
-          zip -r "dist/clock_widget.zip" . -x ".git/*" -x ".github/*" -x "dist/*" -x "*.zip"
+          (cd /tmp/pkg && zip -r "$GITHUB_WORKSPACE/dist/clock_widget.zip" clock_widget)
 
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v1
